@@ -2,7 +2,7 @@
 
 module tb_ppm( );
     reg clk;
-    reg rst_n; 
+    reg rst_n;
     reg [1:0] ppm_code;
     wire ppm;
     wire ppm_done;
@@ -11,9 +11,9 @@ ppm uut(
     .clk      (clk     )          ,
     .rst_n    (rst_n   )          ,
     .ppm_code (ppm_code)          ,
-    .ppm      (ppm     )          , 
+    .ppm      (ppm     )          ,
     .ppm_done (ppm_done)          ,
-    .ppm_start(ppm_start)        
+    .ppm_start(ppm_start)
 );
 always begin #295 clk = ~clk; end
 
@@ -26,5 +26,5 @@ initial begin
     ppm_code=2'b00;
 
 end
-    
+
 endmodule
