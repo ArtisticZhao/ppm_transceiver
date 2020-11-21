@@ -26,8 +26,8 @@ initial begin
     rst_n = 1;
     #590
     strobe = 1;
-    #590
-    strobe = 0;
+//    #590
+//    strobe = 0;
 end
 
 always begin #295 clk = ~clk; end

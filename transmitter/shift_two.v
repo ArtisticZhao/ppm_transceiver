@@ -5,7 +5,7 @@ module shift_two(
     input [7:0]      data_in,
     input            strobe,
     output reg [1:0] data_out,
-    output reg       data_send_done
+    output           data_send_done
     );
 
 parameter IDLE = 4'b0000,
@@ -90,7 +90,10 @@ always@(posedge clk or negedge rst_n) begin
             end
             s4: begin
                 if (count==7'b1111111) begin
-                    st <= IDLE;
+                    if (strobe)
+                        st <= s1;
+                    else
+                        st <= IDLE;
                     count <= 4'b0;
                 end else
                     count <= count + 1;
@@ -99,14 +102,15 @@ always@(posedge clk or negedge rst_n) begin
         endcase
 end
 
-wire data_send_done_d;
-assign data_send_done_d = (st==s4)&&(count==7'b1111111);
-always @(posedge clk, negedge rst_n) begin
-    if (!rst_n) begin
-        data_send_done <= 1'b0;
-    end
-    else begin
-        data_send_done <= data_send_done_d;
-    end
-end
+//wire data_send_done_d;
+// the next module need 2 clk to read memory, so the done signal need ealy appear!
+assign data_send_done = (st==s4)&&(count==7'b1111101);
+//always @(posedge clk, negedge rst_n) begin
+//    if (!rst_n) begin
+//        data_send_done <= 1'b0;
+//    end
+//    else begin
+//        data_send_done <= data_send_done_d;
+//    end
+//end
 endmodule
