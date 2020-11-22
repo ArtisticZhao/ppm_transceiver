@@ -4,12 +4,12 @@ module sof(
     input clk,//时钟周期0.59us
     input rst_n,
     input control_sof,
-    output reg sof, //sof低电平9.44us 16个时钟周期
+    output reg sof, //sof低电�?9.44us 16个时钟周�?
     output sof_done
     );
 reg [7:0]cnt;
 reg flag;
-assign sof_done=(cnt==129);
+assign sof_done=(cnt==123);
 always@(posedge clk or negedge rst_n) begin
     if(!rst_n)begin
         sof <= 1;

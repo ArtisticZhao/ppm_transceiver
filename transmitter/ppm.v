@@ -31,7 +31,7 @@ always@(posedge clk or negedge rst_n) begin
             end
             TRANS_PPM: begin
                 case(ppm_code)
-                00: begin
+                2'b00: begin
                     cnt<=cnt+1;
                     if(cnt<16)
                         ppm<=1;
@@ -57,7 +57,7 @@ always@(posedge clk or negedge rst_n) begin
                             state <= IDLE;
                     end
                 end
-                01:begin
+                2'b01:begin
                     cnt<=cnt+1;
                     if(cnt<16)
                         ppm<=1;
@@ -83,7 +83,7 @@ always@(posedge clk or negedge rst_n) begin
                             state <= IDLE;
                     end
                 end
-                10:begin
+                2'b10:begin
                     cnt<=cnt+1;
                     if(cnt<16)
                         ppm<=1;
@@ -109,7 +109,7 @@ always@(posedge clk or negedge rst_n) begin
                             state <= IDLE;
                     end
                 end
-                11:begin
+                2'b11:begin
                     cnt<=cnt+1;
                     if(cnt<16)
                         ppm<=1;

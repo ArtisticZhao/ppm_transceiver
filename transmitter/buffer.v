@@ -18,7 +18,6 @@ module ppm_frame_buffer (
     output reg       shift_two_strobe,
     output reg       frame_done
 );
-
 localparam IDLE          = 4'b1;
 localparam RECV_USERDATA = 4'b10;    // read user data input, data len = N
 localparam WAIT_TRANS    = 4'b100;   // wait transmitter send SOF done
@@ -37,7 +36,6 @@ always @(posedge clk or negedge rst_n) begin
         state <= IDLE;
         data_in_count <= 4'b0;
         recv_count <= 4'b0;
-        frame_done <= 1'b0;
         data_out <= 8'b0;
         shift_two_strobe <= 1'b0;
         strobe_flag <= 1'b1;
@@ -46,6 +44,7 @@ always @(posedge clk or negedge rst_n) begin
     else begin
         case (state)
             IDLE: begin
+                data_out <= 8'b0;
                 if (Le == 1'b1) begin
                     state <= RECV_USERDATA;
                     data_in_count <= N;
@@ -79,11 +78,10 @@ always @(posedge clk or negedge rst_n) begin
                     if (shift_two_data_send_done) begin
                         data_in_count <= data_in_count - 1'b1;
                     end
-                    data_out <= buffer[data_in_count-1];
+                    data_out <= buffer[recv_count-data_in_count];
                 end
                 else begin
                     state <= IDLE;
-                    frame_done <= 1'b1;
                     shift_two_strobe <= 1'b0;
                 end
             end
@@ -91,6 +89,22 @@ always @(posedge clk or negedge rst_n) begin
                 state <= IDLE;
             end
         endcase
+    end
+end
+//reg frame_done_legency;
+wire frame_done_legency2;
+reg frame_done_legnecy1;
+reg frame_done_legency;
+assign frame_done_legency2 = shift_two_data_send_done && (state==SEND_TO_SHIFT) && (data_in_count==1);
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        frame_done <= 1'b0;
+        frame_done_legency <= 1'b0;
+        frame_done_legnecy1 <= 1'b0;
+    end else begin
+        frame_done_legnecy1 <= frame_done_legency2;
+        frame_done_legency <= frame_done_legnecy1;
+        frame_done <= frame_done_legency;
     end
 end
 endmodule

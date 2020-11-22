@@ -31,10 +31,10 @@ wire ppm_done;
 wire control_ppm;
 
 // --- state mechine to ctrl send process
-localparam IDLE                = 5'b1;
-localparam TRANSMIT_SOF        = 5'b100;
-localparam TRANSMIT_FRAME_DATA = 5'b1000;
-localparam TRANSMIT_EOF        = 5'b10000;
+localparam IDLE                = 4'b1;
+localparam TRANSMIT_SOF        = 4'b10;
+localparam TRANSMIT_FRAME_DATA = 4'b100;
+localparam TRANSMIT_EOF        = 4'b1000;
 
 reg [3:0] state;
 

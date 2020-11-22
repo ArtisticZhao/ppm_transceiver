@@ -104,5 +104,5 @@ always@(posedge clk or negedge rst_n) begin
 end
 assign symbol_strobe = (st != IDLE);
 // the next module need 2 clk to read memory, so the done signal need ealy appear!
-assign data_send_done = (st==s4)&&(count==7'b1111101);
+assign data_send_done = (st==s4)&&(count==7'b1111100);
 endmodule
