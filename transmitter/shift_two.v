@@ -5,6 +5,7 @@ module shift_two(
     input [7:0]      data_in,
     input            strobe,
     output reg [1:0] data_out,
+    output           symbol_strobe, // the signal to trigger ppm module
     output           data_send_done
     );
 
@@ -101,16 +102,7 @@ always@(posedge clk or negedge rst_n) begin
             default: st <= IDLE;
         endcase
 end
-
-//wire data_send_done_d;
+assign symbol_strobe = (st != IDLE);
 // the next module need 2 clk to read memory, so the done signal need ealy appear!
 assign data_send_done = (st==s4)&&(count==7'b1111101);
-//always @(posedge clk, negedge rst_n) begin
-//    if (!rst_n) begin
-//        data_send_done <= 1'b0;
-//    end
-//    else begin
-//        data_send_done <= data_send_done_d;
-//    end
-//end
 endmodule

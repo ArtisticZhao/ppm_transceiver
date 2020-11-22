@@ -41,6 +41,7 @@ always @(posedge clk or negedge rst_n) begin
         data_out <= 8'b0;
         shift_two_strobe <= 1'b0;
         strobe_flag <= 1'b1;
+        user_recv_done <= 1'b0;
     end
     else begin
         case (state)

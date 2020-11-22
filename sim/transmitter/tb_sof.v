@@ -30,7 +30,7 @@ initial begin
     control_sof=1;
     # 590
     control_sof=0;
-        
+
 end
 
 endmodule
